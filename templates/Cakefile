@@ -1,0 +1,33 @@
+Snockets = require 'snockets'
+CoffeeScript = require 'coffee-script'
+jsParser = (require 'uglify-js').parser
+jsMinifier = (require 'uglify-js').uglify
+fs = require 'fs'
+
+mainSourceFile = 'router/{{ projectName }}.coffee'
+outputPath = './'
+outputFilename = '{{ projectName }}' # gets .js and -min.js automatically
+
+task 'combine', 'Combine all relevant individual files into {{ projectName }}[-min].js', (options) ->
+  snockets = new Snockets()
+  # development:
+  snockets.getConcatenation mainSourceFile, (error, js) ->
+    console.log error if error
+    fs.writeFile "#{outputPath}#{outputFilename}.js", js, 'utf8', (error) ->
+      throw error if error
+      console.log "√ Written #{outputPath}#{outputFilename}.js…"
+  # minified:
+  snockets.getConcatenation mainSourceFile, minify: true, (error, js) ->
+    throw new Error error if error
+    fs.writeFile "#{outputPath}#{outputFilename}-min.js", js, 'utf8', (error) ->
+      throw new Error error if error
+      console.log "√ Written #{outputPath}#{outputFilename}-min.js…"
+
+# Adjust here to add a task that combines tests into one includable
+# file:
+#task 'combineTests', 'Combine tests…', (options) ->
+#  snockets = new Snockets()
+#  snockets.getConcatenation '{{ projectName }}/tests/Tests.coffee', (error, js) ->
+#    console.log error if error
+#    fs.writeFile "#{outputPath}Tests.js", js, 'utf8', (error) ->
+#      console.log error if error

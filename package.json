@@ -1,0 +1,27 @@
+{
+  "name": "RuckZuck",
+  "version": "0.0.0",
+  "description": "Kickstart a backbone.js based project.",
+  "bin": {
+    "ruckzuck": "./src/bin.coffee"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alappe/RuckZuck"
+  },
+  "keywords": [
+    "backbone.js",
+    "kickstarter",
+    "code-generator"
+  ],
+  "author": "Andreas Lappe",
+  "license": "BSD",
+  "dependencies": {
+    "optimist": "~0.3.4",
+    "findit": "~0.1.2",
+    "underscore": "~1.3.3"
+  }
+}

@@ -28,6 +28,7 @@ Kickstart a new project:
 ## TODOs
 
 * Restructure code to make it readable
+* Add tests to code
 * Add ability to kickstart a model/view/collection
 * Get rid of number-prefixed files and directories
 * Add ability to use an environment variable to point to your own

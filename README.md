@@ -29,7 +29,7 @@ Kickstart a new project:
 
 * Restructure code to make it readable
 * Add tests to code
-* Add ability to kickstart a model/view/collection
+* Add ability to kickstart a <del>model</del>/view/collection
 * Get rid of number-prefixed files and directories
 * Add ability to use an environment variable to point to your own
   template path instead of mine

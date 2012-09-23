@@ -27,6 +27,8 @@ class RuckZuck
     # At the moment there is only one action:
     if argv.create and argv.project and argv._.length is 1
       @createProject argv._[0]
+    else if argv.create and argv.model and argv._.length is 1
+      @createModel argv._[0]
     else
       console.log optimist.help()
       process.exit 1
@@ -63,6 +65,9 @@ class RuckZuck
     cakeTemplate = _.template (fs.readFileSync (path.resolve @templatePath, '../Cakefile')).toString()
     fs.writeFileSync (path.join projectName, 'Cakefile'), cakeTemplate @basicValues
 
+    # Write the configuration file
+    @writeConfiguration projectName, @basicValues
+
     # Write package.json
     packageJson =
       name: @basicValues.projectName
@@ -72,6 +77,37 @@ class RuckZuck
     # Install dependencies for build process:
     console.log "Installing basic build-process dependencies locally: snockets, coffee-script, uglify-js…"
     exec 'npm install snockets coffee-script uglify-js', cwd: projectName
+
+  # Write the configuration to a file (.ruckruckrc)
+  #
+  # @param [String] relativePath
+  # @param [Object] configuration
+  writeConfiguration: (relativePath, configuration) ->
+    fs.writeFileSync (path.resolve relativePath, '.ruckzuckrc'), (JSON.stringify configuration)
+
+  # Read in the configuration and return it.
+  #
+  # @return [Object]
+  getConfiguration: ->
+    configurationPath = undefined
+    for i in ['.', '..', '../..']
+      possiblePath = path.resolve i, '.ruckzuckrc'
+      configurationPath = possiblePath if fs.existsSync possiblePath
+    throw Error 'Cannot find your project\'s .ruckzuckrc. Are you in your project?' unless configurationPath?
+    configuration = JSON.parse (fs.readFileSync configurationPath)
+    configuration.relativePath = configurationPath
+    configuration
+
+  # Create a model
+  #
+  # @param [String] name
+  createModel: (name) ->
+    configuration = @getConfiguration()
+    configuration.name = name
+    templatePath = path.resolve __dirname, '../templates/Model.coffee'
+    modelPath = path.resolve (path.dirname configuration.relativePath), 'models', "#{name}.coffee"
+    modelTemplate = _.template (fs.readFileSync templatePath).toString()
+    fs.writeFileSync modelPath, modelTemplate configuration
 
   # Build a string of require-directives to include necessary
   # directories and files.

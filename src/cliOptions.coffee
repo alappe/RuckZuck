@@ -15,6 +15,11 @@ options = [
     long: 'model'
     describe: 'Handle a model'
     boolean: true
+  ,
+    short: 'v'
+    long: 'view'
+    describe: 'Handle a view'
+    boolean: true
 ]
 
 for option in options

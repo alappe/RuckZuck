@@ -29,6 +29,8 @@ class RuckZuck
       @createProject argv._[0]
     else if argv.create and argv.model and argv._.length is 1
       @createModel argv._[0]
+    else if argv.create and argv.view and argv._.length is 1
+      @createView argv._[0]
     else
       console.log optimist.help()
       process.exit 1
@@ -108,6 +110,17 @@ class RuckZuck
     modelPath = path.resolve (path.dirname configuration.relativePath), 'models', "#{name}.coffee"
     modelTemplate = _.template (fs.readFileSync templatePath).toString()
     fs.writeFileSync modelPath, modelTemplate configuration
+
+  # Create a view
+  #
+  # @param [String] name
+  createView: (name) ->
+    configuration = @getConfiguration()
+    configuration.name = name
+    templatePath = path.resolve __dirname, '../templates/View.coffee'
+    viewPath = path.resolve (path.dirname configuration.relativePath), 'views', "#{name}.coffee"
+    viewTemplate = _.template (fs.readFileSync templatePath).toString()
+    fs.writeFileSync viewPath, viewTemplate configuration
 
   # Build a string of require-directives to include necessary
   # directories and files.

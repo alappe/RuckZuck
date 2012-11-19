@@ -20,6 +20,11 @@ options = [
     long: 'view'
     describe: 'Handle a view'
     boolean: true
+  ,
+    short: 't'
+    long: 'template'
+    describe: 'Handle a template'
+    boolean: true
 ]
 
 for option in options

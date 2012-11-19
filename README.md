@@ -33,11 +33,15 @@ Kickstart a new view (inside the project directory):
 
 `ruckzuck --create --view Car`
 
+Kickstart a new template (inside the project directory):
+
+`ruckzuck --create --template Car`
+
 ## TODOs
 
 * Restructure code to make it readable
 * Add tests to code
-* Add ability to kickstart a <del>model</del>/<del>view</del>/template/collection
+* Add ability to kickstart a <del>model</del>/<del>view</del>/<del>template</del>/collection
 * Get rid of number-prefixed files and directories
 * Add ability to use an environment variable to point to your own
   template path instead of mine

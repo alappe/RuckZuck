@@ -76,6 +76,7 @@ class RuckZuck
     packageJson =
       name: @basicValues.projectName
       author: @basicValues.author
+      version: '0.0.1'
       dependencies: {}
     fs.writeFileSync (path.join projectName, 'package.json'), (JSON.stringify packageJson, null, 2)
     # Install dependencies for build process:

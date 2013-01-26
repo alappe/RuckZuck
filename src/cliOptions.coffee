@@ -25,6 +25,11 @@ options = [
     long: 'template'
     describe: 'Handle a template'
     boolean: true
+  ,
+    short: 'C'
+    long: 'collection'
+    describe: 'Handle a collection'
+    boolean: true
 ]
 
 for option in options

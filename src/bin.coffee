@@ -33,6 +33,8 @@ class RuckZuck
       @createView argv._[0]
     else if argv.create and argv.template and argv._.length is 1
       @createTemplate argv._[0]
+    else if argv.create and argv.collection and argv._.length is 1
+      @createCollection argv._[0]
     else
       console.log optimist.help()
       process.exit 1
@@ -135,6 +137,17 @@ class RuckZuck
     tPath = path.resolve (path.dirname configuration.relativePath), 'templates', "#{name}.coffee"
     tTemplate = _.template (fs.readFileSync templatePath).toString()
     fs.writeFileSync tPath, tTemplate configuration
+
+  # Create a collection
+  #
+  # @param [String] name
+  createCollection: (name) ->
+    configuration = @getConfiguration()
+    configuration.name = name
+    templatePath = path.resolve __dirname, '../templates/Collection.coffee'
+    collectionPath = path.resolve (path.dirname configuration.relativePath), 'collection', "#{name}.coffee"
+    collectionTemplate = _.template (fs.readFileSync templatePath).toString()
+    fs.writeFileSync collectionPath, collectionTemplate configuration
 
   # Build a string of require-directives to include necessary
   # directories and files.
